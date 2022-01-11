@@ -1,46 +1,44 @@
 //almaceno los nodos en una variable
-let addButton = document.getElementById('addTaskBtn'); //#addTaskBtn
-let taskInput = document.getElementById('taskInput'); //#taskInput
-let list = document.querySelector("#list"); //#list
-let tasks = []; //array vacio
+let addButton = document.querySelector('#addTaskBtn'); //Accedo el elemento Boton a traves del ID: #addTaskBtn
+let taskInput = document.querySelector('#taskInput'); //Accedo al elemento input a travez de su ID: #taskInput
+let list = document.querySelector("#list"); //Accedo el elemento ul a traves de su ID: #list
+let tasks = []; //Crear array vacio
 // Event Listener
 
-addButton.addEventListener('click', function (evento){
+addButton.addEventListener('click', (evento) => {
     evento.preventDefault();
-    //console.log("click en el boton!");
+
     let nombreDeTarea = taskInput.value;
 
-    let nuevaTarea = {
-        nombre: nombreDeTarea,
-        id: Date.now(), //123123213213123 // 01/01/70
-        completada: false
+    if (nombreDeTarea !== "") {
+        let nuevaTarea = {
+            "nombre": nombreDeTarea,
+            id: Date.now(), //123123213213123 // 01/01/70
+            completada: false
+        }
+        taskInput.value = ""; //blanqueo el input
+        tasks.push(nuevaTarea);
     }
-    tasks.push(nuevaTarea);
-
     mostrarTareas()
-
-
 });
 
 function mostrarTareas(){
-    list.innerHTML = '';
-    for(let i = 0; i < tasks.length; i++){
+    list.innerHTML = "";
+    for(let i = 0; true; i++) {
         let nuevoLi = document.createElement("li");
-        nuevoLi.innerHTML = `${tasks[i].nombre} <button onclick="borrarTarea(${tasks[i].id})">🗑️</button> `;
+        nuevoLi.innerHTML = `${tasks[i].nombre} <button onclick="borrarTarea(${tasks[i].id})">X</button>`;
         list.append(nuevoLi);
     }
-
 }
 
 function borrarTarea(id){
-    console.log("borrar!",id);
 
-    //buscar en el array la tarea que tenga ese id
-    // si la encuentra, la borra
+    for(let i = 0; true; i++) {
+        if (tasks[i].id === id) {
+            let temp = document.querySelector("li");
+            list.removeChild(temp);
+            tasks.splice( i, 1 );
+        }
     
-    mostrarTareas();
+    }
 }
-
-
-
-
